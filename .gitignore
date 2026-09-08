@@ -33,6 +33,7 @@ htmlcov/
 # Local reports & temp outputs
 *.tmp
 *.log
+*.html
 temp/
 
 # IDEs, System & Local Agent Configurations

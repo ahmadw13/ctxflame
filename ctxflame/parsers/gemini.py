@@ -151,8 +151,10 @@ class GeminiParser(BaseParser):
                             children=[]
                         )
                     )
-
             full_text = "\n".join(text_lines)
+            if children:
+                children_text = "\n".join(c.content or "" for c in children)
+                full_text = f"{full_text}\n{children_text}".strip() if full_text else children_text
             if role == "user":
                 node_type = NodeType.USER_MESSAGE
                 name = f"User Turn #{idx + 1}"

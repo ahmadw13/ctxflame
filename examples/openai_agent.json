@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a professional financial intelligence agent specializing in multi-entity portfolio analysis and risk compliance. Adhere strictly to verified data and cite sources."
+    },
+    {
+      "role": "user",
+      "content": "Analyze the quarterly earnings report for Falcon Tech Inc. and calculate the debt-to-equity ratio."
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_99182",
+          "type": "function",
+          "function": {
+            "name": "query_financial_database",
+            "arguments": "{\"ticker\": \"FALC\", \"year\": 2025, \"quarter\": \"Q4\", \"metrics\": [\"total_debt\", \"shareholders_equity\"]}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_99182",
+      "content": "{\"status\": \"success\", \"data\": {\"ticker\": \"FALC\", \"total_debt_usd\": 142000000, \"shareholders_equity_usd\": 310000000, \"interest_expense\": 6400000, \"operating_cash_flow\": 58000000}}"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on the Q4 2025 financial database records, Falcon Tech Inc. reports Total Debt of $142.0M and Shareholders' Equity of $310.0M, resulting in a Debt-to-Equity ratio of 0.458."
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "query_financial_database",
+        "description": "Query structured balance sheets, income statements, and cash flows for registered corporations.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticker": {
+              "type": "string",
+              "description": "Stock exchange market ticker symbol"
+            },
+            "year": {
+              "type": "integer",
+              "description": "Fiscal year"
+            },
+            "quarter": {
+              "type": "string",
+              "enum": ["Q1", "Q2", "Q3", "Q4"],
+              "description": "Fiscal quarter"
+            },
+            "metrics": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "List of financial line item metrics requested"
+            }
+          },
+          "required": ["ticker", "year", "quarter"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "fetch_regulatory_filings",
+        "description": "Retrieve certified SEC or regulatory audit filings by company CIK identifier.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "cik": { "type": "string", "description": "Central Index Key" },
+            "form_type": { "type": "string", "enum": ["10-K", "10-Q", "8-K"] }
+          },
+          "required": ["cik", "form_type"]
+        }
+      }
+    }
+  ]
+}

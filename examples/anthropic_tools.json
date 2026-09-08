@@ -1,0 +1,58 @@
+{
+  "system": "You are a code refactoring and architecture analysis agent. Inspect repository diffs and produce structured review feedback.",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Review the authentication middleware refactoring in security/jwt.go."
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I will examine the git diff for security/jwt.go first."
+        },
+        {
+          "type": "tool_use",
+          "id": "tu_review_01",
+          "name": "get_git_diff",
+          "input": {
+            "filepath": "security/jwt.go",
+            "base_commit": "main",
+            "head_commit": "HEAD"
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "tu_review_01",
+          "content": "diff --git a/security/jwt.go b/security/jwt.go\n+func VerifyToken(tokenString string) (*Claims, error) {\n+    token, err := jwt.ParseWithClaims(tokenString, &Claims{}, keyFunc)\n+    return token.Claims.(*Claims), err\n+}"
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_git_diff",
+      "description": "Obtain unified git diff between commits for a given filepath.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "filepath": { "type": "string" },
+          "base_commit": { "type": "string" },
+          "head_commit": { "type": "string" }
+        },
+        "required": ["filepath"]
+      }
+    }
+  ]
+}
