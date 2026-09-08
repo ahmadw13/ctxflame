@@ -150,6 +150,9 @@ class AnthropicParser(BaseParser):
                             )
                         )
                 full_content = "\n".join(text_blocks)
+                if children:
+                    children_text = "\n".join(c.content or "" for c in children)
+                    full_content = f"{full_content}\n{children_text}".strip() if full_content else children_text
             else:
                 full_content = str(raw_content)
 
