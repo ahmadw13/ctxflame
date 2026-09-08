@@ -1,0 +1,47 @@
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+eggs/
+.eggs/
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Environments & Secrets
+.env
+.env.*
+*.env
+
+# Local reports & temp outputs
+*.tmp
+*.log
+temp/
+
+# IDEs, System & Local Agent Configurations
+.agents/
+.agent/
+.gemini/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
